@@ -33,8 +33,8 @@ size in their own way. The spiral I was most pleased with the results from was
 function (in this case, cosine) on the `frameCount` and `sineSpeed`. The color
 also linearly scales with the radius.
 
-### `Spiral.pde`
+### `Spirals.pde`
 
 Driver class. Contains concrete instantiations each spiral, as well as an input
-framework for adjusting parameters include speed, direction, zoom, and
+framework for adjusting parameters including speed, direction, zoom, and
 play/pause.
