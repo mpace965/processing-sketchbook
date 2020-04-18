@@ -41,8 +41,11 @@ void draw() {
   }
   
   boolean playing = step <= totalSteps;
+  float stepProgressPct = map(((frameCount - 1) % stepMod), 0, stepMod - 1, 0, 1);
   
-  float stepSinePct = playing ? sin(map(((frameCount - 1) % stepMod), 0, stepMod - 1, 0, HALF_PI)) : 1;
+  float stepSinePct = playing && stepProgressPct < 0.33
+    ? pow(sin(100 / 33 * HALF_PI * stepProgressPct), 2)
+    : 1;
   //println(frameCount, ((frameCount - 1) % 120), stepSinePct, scales[step - 1], scales[step], lerp(scales[step - 1], scales[step], stepSinePct));
   scale(playing ? lerp(scales[step - 1], scales[step], stepSinePct) : scales[totalSteps]);
   
