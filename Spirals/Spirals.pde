@@ -15,7 +15,7 @@ void setup() {
   frameRate(60);
 
   direction = Direction.CLOCKWISE;
-  speed = 0.917;
+  speed = 2.962;
   sineSpeed = 6;
   pause = null;
   largeSpeedDelta = 0.05;
@@ -72,9 +72,9 @@ void draw() {
 
   spiral.draw();
 
-  //if (frameCount <= 184) {
-  //  saveFrame("frames/#####.png");
-  //}
+  if (frameCount <= 500) {
+    saveFrame("frames/#####.png");
+  }
 }
 
 void gradient() {
