@@ -31,8 +31,8 @@ void sineCircleUnfold() {
   stroke(255);
   strokeWeight(10);
   
-  for (float t = 0; t < TAU; t += 0.08) {
-    float sineWaveRadius = r + amplitude * sin(sineSpeed * radians(t * step));
+  for (float t = 0; t < TAU; t += 0.1) {
+    float sineWaveRadius = r + amplitude * sin(t + radians(step));
     if (t < PI) {
       stroke(lerpColor(color1, color2, map(t, 0, PI, 0, 1)));
     } else {

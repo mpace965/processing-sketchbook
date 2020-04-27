@@ -12,7 +12,7 @@ float[] scales = { 0.8, 0.6, 0.4, 0.3, 0.27, 0.25, 0.23, 0.2, 0.18, 0.16, 0.14, 
 int step = 1;
 int totalSteps = scales.length - 1;
 float stepSeconds = 2;
-float fundamental = 97.997;
+float fundamental = 5;
 int stepMod = floor(frameRate * stepSeconds);
 
 void setup() {
