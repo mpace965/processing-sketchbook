@@ -119,22 +119,6 @@ PImage shiftVertical(PImage image) {
   return image;
 }
 
-void shiftHorizontal() { 
-  for (int i = 0; i < numXSections; i++) {
-    int startY = xSectionSize * i;
-    int endY = xSectionSize * (i + 1);
-    shiftHorizontalSectionCanvas(startY, endY, xOffsets.get(i));
-  }
-}
-
-void shiftVertical() {
-  for (int i = 0; i < numYSections; i++) {
-    int startX = ySectionSize * i;
-    int endX = ySectionSize * (i + 1);
-    shiftVerticalSectionCanvas(startX, endX, yOffsets.get(i));
-  }
-}
-
 void stepOffsets() {
   int frameMod = (frameCount - 1) % transitionFrames;
   float progressTheta = map(frameMod, 0, transitionFrames - 1, 0, HALF_PI);
@@ -174,18 +158,6 @@ IntList getNextYOffsets() {
   IntList next = new IntList(yOffsets.array());
   
   return next;
-}
-
-void shiftHorizontalSectionCanvas(int startY, int endY, int offset) {
-  loadPixels();
-  shiftHorizontalSection(pixels, startY, endY, offset);
-  updatePixels();
-}
-
-void shiftVerticalSectionCanvas(int startY, int endY, int offset) {
-  loadPixels();
-  shiftVerticalSection(pixels, startY, endY, offset);
-  updatePixels();
 }
 
 void shiftHorizontalSectionImg(PImage img, int startY, int endY, int offset) {
