@@ -4,18 +4,18 @@ ChevronSlider a;
 ChevronSliderCycle b;
 ChevronSliderCycle c;
 ChevronSliderCycle2 d;
-ChevronSliderNext e;
+ChevronSliderCirclePermutation e;
 FishChevronSlider f;
 
 void setup() {
   size(800, 800);
   frameRate(60);
-  
+
   a = new ChevronSlider(size, 19, 6, 8, 8, 45);
   b = new ChevronSliderCycle(size, 19, 6, 8, 8, 45);
   c = new ChevronSliderCycle(size, 19, 6, 8, 16, 45);
   d = new ChevronSliderCycle2(size, 19, 6, 8, 16, 45);
-  e = new ChevronSliderNext(size, 19, 6, 8, 16, 45);
+  e = new ChevronSliderCirclePermutation(size, 19, 6, 2, 2, 15);
   f = new FishChevronSlider(size, 19, 6, 8, 16, 2);
 }
 
