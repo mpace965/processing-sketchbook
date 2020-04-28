@@ -61,7 +61,7 @@ class ChevronSlider {
   
   private void debugOffset() {
     if (debug) {
-      println("[Offset Generation] ", offsetGeneration);
+      println("[Offset Generation]", offsetGeneration);
     }
   }
 
@@ -76,15 +76,15 @@ class ChevronSlider {
   public void draw() {
     push();
     debugFrameHeader();
-    background(255);
 
     stroke(0);
     strokeWeight(10);
     strokeCap(PROJECT);
     
-    if (lastGenerationSnapshot == null) {  
+    if (this.lastGenerationSnapshot == null) {
+      drawInitialBackground();
       drawChevrons();
-      lastGenerationSnapshot = snapshot();
+      this.lastGenerationSnapshot = snapshot();
       background(255);
     }
     
@@ -94,14 +94,24 @@ class ChevronSlider {
     pop();
   }
   
+  protected void drawInitialBackground() {
+    background(255);
+  }
+
   private void drawChevrons() {
     for (int y = 0; y < this.numHeight; y++) {
+      stroke(getChevronColorForRow(y));
       for (int x = 0; x < this.numWidth; x++) {
         drawChevron(this.chevWidth * x - this.chevWidth, this.chevHeight * y / 2 - this.chevHeight, this.chevWidth, this.chevHeight);
       }
     }
+    stroke(#000000);
   }
   
+  protected color getChevronColorForRow(int row) {
+    return #000000;
+  }
+
   private void drawChevron(float x, float y, float chevWidth, float chevHeight) {
     line(x, y, x + chevWidth / 2, y + chevHeight);
     line(x + chevWidth / 2, y + chevHeight, x + chevWidth, y);
