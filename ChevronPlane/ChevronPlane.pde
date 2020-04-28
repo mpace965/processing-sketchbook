@@ -4,6 +4,7 @@ ChevronSlider a;
 ChevronSliderCycle b;
 ChevronSliderCycle c;
 ChevronSliderCycle2 d;
+ChevronSliderNext e;
 FishChevronSlider f;
 
 void setup() {
@@ -14,6 +15,7 @@ void setup() {
   b = new ChevronSliderCycle(size, 19, 6, 8, 8, 45);
   c = new ChevronSliderCycle(size, 19, 6, 8, 16, 45);
   d = new ChevronSliderCycle2(size, 19, 6, 8, 16, 45);
+  e = new ChevronSliderNext(size, 19, 6, 8, 16, 45);
   f = new FishChevronSlider(size, 19, 6, 8, 16, 2);
 }
 
@@ -21,6 +23,7 @@ void draw() {
   //a.draw(); // Static chevrons
   //b.draw(); // Simple cycle with 8
   //c.draw(); // Simple cycle with 16
-  d.draw(); // The cool one containing the fish
+  //d.draw(); // The cool one containing the fish
+  e.draw();
   //f.draw(); // Fast-forward to the fish
 }

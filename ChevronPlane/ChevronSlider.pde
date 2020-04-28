@@ -209,30 +209,64 @@ class ChevronSlider {
   }
   
   private void shiftVerticalSection(color[] source, int startX, int endX, int offset) {
+    if (offset == 0) return;
+
+    int posOffset = abs(offset);
+    
     for (int x = startX; x < endX; x++) {
-      color[] pushedPixels = new color[offset];
-      for (int y = 0; y < this.size; y++) {
-        int idx = index2D(this.size, y, x);
-        if (y < this.size - offset) {
-          if (y < offset) pushedPixels[y] = source[idx];
-          source[idx] = source[index2D(this.size, y + offset, x)];
-        } else {
-          source[idx] = pushedPixels[abs(this.size - y - offset)];
+      color[] pushedPixels = new color[posOffset];
+      
+      if (offset > 0) {
+        for (int y = 0; y < this.size; y++) {
+          int idx = index2D(this.size, y, x);
+          if (y < this.size - offset) {
+            if (y < offset) pushedPixels[y] = source[idx];
+            source[idx] = source[index2D(this.size, y + offset, x)];
+          } else {
+            source[idx] = pushedPixels[abs(this.size - y - offset)];
+          }
+        }
+      } else {
+        for (int y = this.size - 1; y >= 0; y--) {
+          int idx = index2D(this.size, y, x);
+          if (y >= posOffset) {
+            if (y > size + offset - 1) pushedPixels[posOffset - (this.size - y)] = source[idx];
+            source[idx] = source[index2D(this.size, y - posOffset, x)];
+          } else {
+            source[idx] = pushedPixels[y];
+          }
         }
       }
     }
   }
   
   private void shiftHorizontalSection(color[] source, int startY, int endY, int offset) {
+    if (offset == 0) return;
+
+    int posOffset = abs(offset);
+    
     for (int y = startY; y < endY; y++) {
-      color[] pushedPixels = new color[offset];
-      for (int x = 0; x < this.size; x++) {
-        int idx = index2D(this.size, y, x);
-        if (x < this.size - offset) {
-          if (x < offset) pushedPixels[x] = source[idx];
-          source[idx] = source[index2D(this.size, y, x + offset)];
-        } else {
-          source[idx] = pushedPixels[abs(this.size - x - offset)];
+      color[] pushedPixels = new color[posOffset];
+      
+      if (offset > 0) {
+        for (int x = 0; x < this.size; x++) {
+          int idx = index2D(this.size, y, x);
+          if (x < this.size - offset) {
+            if (x < offset) pushedPixels[x] = source[idx];
+            source[idx] = source[index2D(this.size, y, x + offset)];
+          } else {
+            source[idx] = pushedPixels[abs(this.size - x - offset)];
+          }
+        }
+      } else if (offset < 0) {
+        for (int x = this.size - 1; x >= 0; x--) {
+          int idx = index2D(this.size, y, x);
+          if (x >= posOffset) {
+            if (x > size - posOffset - 1) pushedPixels[posOffset - (this.size - x)] = source[idx];
+            source[idx] = source[index2D(this.size, y, x - posOffset)];
+          } else {
+            source[idx] = pushedPixels[x];
+          }
         }
       }
     }
