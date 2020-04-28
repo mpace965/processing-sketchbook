@@ -86,6 +86,7 @@ class ChevronSlider {
       drawChevrons();
       this.lastGenerationSnapshot = snapshot();
       background(255);
+      modifyInitialImage();
     }
     
     image(shiftVertical(shiftHorizontal(this.lastGenerationSnapshot.copy())), 0, 0);
@@ -93,7 +94,7 @@ class ChevronSlider {
     
     pop();
   }
-  
+
   protected void drawInitialBackground() {
     background(255);
   }
@@ -107,6 +108,8 @@ class ChevronSlider {
     }
     stroke(#000000);
   }
+
+  protected void modifyInitialImage() { }
   
   protected color getChevronColorForRow(int row) {
     return #000000;
@@ -127,7 +130,7 @@ class ChevronSlider {
     return snapshot;
   }
   
-  private PImage shiftHorizontal(PImage image) {
+  protected PImage shiftHorizontal(PImage image) {
     for (int i = 0; i < this.numXSections; i++) {
       int startY = this.xSectionSize * i;
       int endY = this.xSectionSize * (i + 1);
@@ -137,7 +140,7 @@ class ChevronSlider {
     return image;
   }
   
-  private PImage shiftVertical(PImage image) {
+  protected PImage shiftVertical(PImage image) {
     for (int i = 0; i < this.numYSections; i++) {
       int startX = this.ySectionSize * i;
       int endX = this.ySectionSize * (i + 1);
@@ -152,11 +155,22 @@ class ChevronSlider {
     float progressTheta = map(frameMod, 0, this.transitionFrames - 1, 0, HALF_PI);
     float progress = pow(sin(progressTheta), 2);
     
-    if (frameMod == 0) {
+    if (frameMod == 0) stepOffsetGeneration(null);
+
+    for (int i = 0; i < this.numXSections; i++) {
+      this.xOffsets.set(i, ceil(map(progress, 0, 1, 0, this.nextXOffsets.get(i))));
+    }
+
+    for (int i = 0; i < this.numYSections; i++) {
+      this.yOffsets.set(i, ceil(map(progress, 0, 1, 0, this.nextYOffsets.get(i))));
+    }
+  }
+
+  protected void stepOffsetGeneration(PImage image) {
       this.offsetGeneration++;
       debugOffset();
       
-      this.lastGenerationSnapshot = snapshot();
+      this.lastGenerationSnapshot = image == null ? snapshot() : image.copy();
       
       this.xOffsets = new IntList();
       for (int i = 0; i < this.numXSections; i++) this.xOffsets.append(0);
@@ -165,15 +179,6 @@ class ChevronSlider {
       this.yOffsets = new IntList();
       for (int i = 0; i < this.numYSections; i++) this.yOffsets.append(0);
       this.nextYOffsets = getNextYOffsets();
-    }
-    
-    for (int i = 0; i < this.numXSections; i++) {
-      this.xOffsets.set(i, ceil(map(progress, 0, 1, 0, this.nextXOffsets.get(i))));
-    }
-    
-    for (int i = 0; i < this.numYSections; i++) {
-      this.yOffsets.set(i, ceil(map(progress, 0, 1, 0, this.nextYOffsets.get(i))));
-    }
   }
   
   private IntList getNextXOffsets() {
