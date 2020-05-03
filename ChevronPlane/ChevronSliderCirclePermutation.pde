@@ -8,7 +8,7 @@ class ChevronSliderCirclePermutation extends ChevronSlider {
   ChevronSliderCirclePermutation(int size, int numHeight, int numWidth, int numXSections, int numYSections, int transitionFrames, boolean debug) {
     super(size, numHeight, numWidth, numXSections, numYSections, transitionFrames, debug);
   }
-
+ 
   public void setInitialGeneration(int initialGeneration) {
     this.initialGeneration = initialGeneration;
   }
@@ -16,7 +16,7 @@ class ChevronSliderCirclePermutation extends ChevronSlider {
   protected void modifyInitialImage() {
     for (int i = 0; i < this.initialGeneration; i++) {
       shiftVertical(shiftHorizontal(this.lastGenerationSnapshot));
-      stepOffsetGeneration(this.lastGenerationSnapshot);
+      stepOffsetGeneration(this.lastGenerationSnapshot);      
       this.xOffsets = this.nextXOffsets;
       this.yOffsets = this.nextYOffsets;
     }

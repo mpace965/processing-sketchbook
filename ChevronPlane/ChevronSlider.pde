@@ -10,9 +10,11 @@ class ChevronSlider {
   protected IntList yOffsets, nextYOffsets;
   
   protected int offsetGeneration, transitionFrames;
-  PImage lastGenerationSnapshot;
+  protected PImage lastGenerationSnapshot;
   
-  boolean debug;
+  private IntList saveFrames;
+  
+  protected boolean debug;
   
   public ChevronSlider(int size, int numHeight, int numWidth, int numXSections, int numYSections, int transitionFrames) {
     this(size, numHeight, numWidth, numXSections, numYSections, transitionFrames, false);
@@ -51,6 +53,8 @@ class ChevronSlider {
     this.offsetGeneration = 0;
     this.transitionFrames = transitionFrames;
     
+    this.saveFrames = new IntList();
+    
     this.debug = debug;
     debugOffset();
   }
@@ -78,35 +82,47 @@ class ChevronSlider {
     debugFrameHeader();
 
     stroke(0);
-    strokeWeight(10);
+    strokeWeight(getChevronStrokeWeight());
     strokeCap(PROJECT);
     
     if (this.lastGenerationSnapshot == null) {
-      drawInitialBackground();
+      background(getBackgroundColor());
       drawChevrons();
       this.lastGenerationSnapshot = snapshot();
       background(255);
       modifyInitialImage();
     }
     
-    image(shiftVertical(shiftHorizontal(this.lastGenerationSnapshot.copy())), 0, 0);
+    PImage frame = shiftVertical(shiftHorizontal(this.lastGenerationSnapshot.copy()));
+    image(frame, 0, 0);
     stepOffsets();
+    
+    if (saveFrames.hasValue(frameCount)) {
+      frame.save("frames/" + nf(frameCount, 5) + ".png");
+    }
     
     pop();
   }
 
-  protected void drawInitialBackground() {
-    background(255);
+  protected color getBackgroundColor() {
+    return 255;
+  }
+  
+  protected int getChevronStrokeWeight() {
+    return 10;
   }
 
   private void drawChevrons() {
     for (int y = 0; y < this.numHeight; y++) {
       stroke(getChevronColorForRow(y));
       for (int x = 0; x < this.numWidth; x++) {
-        drawChevron(this.chevWidth * x - this.chevWidth, this.chevHeight * y / 2 - this.chevHeight, this.chevWidth, this.chevHeight);
+        drawChevron(this.chevWidth * x - this.chevWidth, this.chevHeight * y / (2 * getHeightSpacingFactor()) - this.chevHeight, this.chevWidth, this.chevHeight);
       }
     }
-    stroke(#000000);
+  }
+  
+  protected int getHeightSpacingFactor() {
+    return 1;
   }
 
   protected void modifyInitialImage() { }
@@ -128,6 +144,10 @@ class ChevronSlider {
     snapshot.updatePixels();
     
     return snapshot;
+  }
+  
+  public void addSaveFrame(int frame) {
+    this.saveFrames.append(frame);
   }
   
   protected PImage shiftHorizontal(PImage image) {

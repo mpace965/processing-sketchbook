@@ -10,9 +10,9 @@ class ChevronSliderCycle2 extends ChevronSlider {
   @Override
   protected color getChevronColorForRow(int row) {
     if (row % 2 == 0) {
-      return #0000ff;
-    } else {
       return #000000;
+    } else {
+      return #0000ff;
     }
   }
 
